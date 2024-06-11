@@ -1,7 +1,9 @@
+import Address from "./address";
+
 class Customer {
     _id: string;
     _name: string;
-    _address: string = "";
+    _address!: Address;
     _active: boolean = true;
 
     constructor(id: string, name: string) {
@@ -28,7 +30,7 @@ class Customer {
         return this._name;
     }
 
-    get address(): string {
+    get address(): Address {
         return this._address;
     }
 
@@ -36,7 +38,7 @@ class Customer {
         this._name = name;
     }
 
-    set address(address: string) {
+    set address(address: Address) {
         this._address = address;
     }
 
