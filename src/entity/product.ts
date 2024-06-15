@@ -1,7 +1,7 @@
 export default class Product {
     private _id: string
     private _name: string
-    private _price: number;
+    _price: number;
 
     constructor(id: string, name: string, price: number) {
         this._id = id;
@@ -23,6 +23,10 @@ export default class Product {
         if(this._price < 0) {
             throw new Error("Price can not be negative");
         }
+    }
+
+    getPrice() {
+        return this._price;
     }
 
     changePrice(price: number) {
