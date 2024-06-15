@@ -1,11 +1,11 @@
 import Address from "./address";
 
 export default class Customer {
-    _id: string;
-    _name: string;
-    _address!: Address;
-    _active: boolean = true;
-    _reward: number = 0;
+    private _id: string;
+    private _name: string;
+    private _address!: Address;
+    private _active: boolean = false;
+    private _reward: number = 0;
 
     constructor(id: string, name: string) {
         this._id = id,
@@ -50,6 +50,15 @@ export default class Customer {
 
     changeName(name: string) {
         this._name = name;
+        this.validate();
+    }
+
+    changeAddress(address: Address) {
+        this.address = address;
+    }
+
+    isActive(): boolean {
+        return this._active;
     }
 
     activate() {
