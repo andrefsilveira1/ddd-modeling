@@ -48,6 +48,10 @@ export default class Customer {
         return this._reward
     }
 
+    get active(): boolean {
+        return this._active;
+    }
+
     changeName(name: string) {
         this._name = name;
         this.validate();
@@ -62,8 +66,11 @@ export default class Customer {
     }
 
     activate() {
+        if (this._address === undefined) {
+          throw new Error("Address is required");
+        }
         this._active = true;
-    }
+      }
 
     deactivate() {
         this._active = false
