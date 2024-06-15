@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize"
+import ProductModel from "../db/sequelize/model/product";
 
 describe("Product repository test", () => {
     let sequelize: Sequelize;
@@ -10,6 +11,8 @@ describe("Product repository test", () => {
             logging: false,
             sync: { force: true },
         });
+
+        // sequelize.addModels({ProductModel}) Find why this does not work
 
         afterEach(async () => {
             await sequelize.close();
