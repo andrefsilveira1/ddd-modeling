@@ -24,4 +24,8 @@ export default class Product {
             throw new Error("Price can not be negative");
         }
     }
+
+    changePrice(price: number) {
+        this._price = price;
+    }
 }
