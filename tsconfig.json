@@ -108,5 +108,5 @@
   },
   "include": [
     "src/**/*.ts"
-, "src/entity/customer.spec.mjs"  ],
+, "src/domain/entity/customer.spec.mjs"  ],
 }
