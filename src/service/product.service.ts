@@ -1,9 +1,11 @@
 import Product from "../domain/entity/product"
 
 export default class ProductService {
-    static increasePrice(products: Product[], percentage: number): void {
+    static increasePrice(products: Product[], percentage: number): Product[] {
         products.forEach(product => {
-            product.changePrice((product._price * percentage) / 100 + product._price)
-        })
+            product.changePrice((product.price * percentage) / 100 + product.price)
+        });
+
+        return products;
     }
 }
