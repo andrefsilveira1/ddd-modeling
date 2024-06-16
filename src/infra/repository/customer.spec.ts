@@ -1,8 +1,11 @@
 import { Sequelize } from "sequelize-typescript"
 import ProductModel from "../db/sequelize/model/product";
-import ProductService from "../../service/product.service";
 import Product from "../../domain/entity/product";
 import ProductRepository from "./product";
+import CustomerRepository from "./customer";
+import Customer from "../../domain/entity/customer";
+import Address from "../../domain/entity/address";
+import CustomerModel from "../db/sequelize/model/customer";
 
 describe("Product repository test", () => {
     let sequelize: Sequelize;
@@ -26,15 +29,22 @@ describe("Product repository test", () => {
     );
 
     it("Should create a product on repository", async () => {
-        const productRepository = new ProductRepository();
-        const product = new Product("1", "Product 1", 100);
-        await productRepository.create(product);
+        const customerRepository = new CustomerRepository();
+        const customer = new Customer("1", "Customer 1");
+        const address = new Address("Street 1", 1, "123456", "Natal");
+        customer.address = address;
+        await customerRepository.create(customer);
 
-        const productModel = await ProductModel.findOne({ where: { id: "1"}});
-        expect(productModel.toJSON()).toStrictEqual({
+        const customerModel = await CustomerModel.findOne({ where: { id: "1"}});
+        expect(customerModel.toJSON()).toStrictEqual({
             id: "1",
-            name: "Product 1",
-            price: 100,
+            name: customer.name,
+            active: customer.isActive(),
+            reward: customer.reward,
+            street: address.street,
+            number: address.number,
+            zip: address.zip,
+            city: address.city,
         });
     });
 

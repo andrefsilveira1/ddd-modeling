@@ -7,10 +7,9 @@ export default class Customer {
     private _active: boolean = false;
     private _reward: number = 0;
 
-    constructor(id: string, name: string, address: Address) {
+    constructor(id: string, name: string) {
         this._id = id,
         this._name = name,
-        this._address = address,
         this.validate()
     }
 
