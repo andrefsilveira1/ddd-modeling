@@ -16,7 +16,7 @@ describe("Product unit tests", () => {
     it("Should throw error when price is negative", () => {
         expect(() => {
             let product = new Product("1", "43", -25);
-        }).toThrowError("Name is required")
+        }).toThrowError("Price can not be negative")
     });
 
     it("Should change Name", () => {
