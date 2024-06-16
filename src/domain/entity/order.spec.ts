@@ -3,19 +3,19 @@ import Order from "./order";
 describe("Order unit tests", () => {
     it("Should throw error when empty", () => {
         expect(() => {
-            let order = new Order("", "aaa", [],0, "prod1", 5);
+            let order = new Order("", "aaa", []);
         }).toThrow("Id is required")
     });
 
     it("Should throw error when empty", () => {
         expect(() => {
-            let order = new Order("123", "", [],0, "prod2", 1);
+            let order = new Order("123", "", []);
         }).toThrow("Customer Id is required")
     });
 
     it("Should throw error when empty", () => {
         expect(() => {
-            let order = new Order("123", "124", [],0, "prod3", 4);
+            let order = new Order("123", "124", []);
         }).toThrow("Items are required")
     });
 

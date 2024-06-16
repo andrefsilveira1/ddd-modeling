@@ -10,7 +10,7 @@ customer.address = address;
 customer.activate();
 
 
-const item1 = new OrderItem("1", "Item 1", 150);
-const item2 = new OrderItem("2", "Item 2", 980);
+const item1 = new OrderItem("1", "Item 1", 150, "p1", 1);
+const item2 = new OrderItem("2", "Item 2", 980, "p2", 2);
 const items = [item1, item2];
 const order = new Order("1", "12345", items)
