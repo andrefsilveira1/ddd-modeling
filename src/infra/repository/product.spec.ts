@@ -79,4 +79,18 @@ describe("Product repository test", () => {
         });
 
     });
+
+    it("Should find a product on repository", async () => {
+        const productRepository = new ProductRepository();
+        const product = new Product("1", "Product 1", 100);
+        const product2 = new Product("2", "Product 2", 200);
+
+        await productRepository.create(product);
+        await productRepository.create(product2);
+
+        const products = [product, product2]
+        const models = await productRepository.list();
+
+        expect(products).toEqual(models)
+    });
 })
