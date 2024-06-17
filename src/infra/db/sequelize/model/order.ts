@@ -1,5 +1,6 @@
-import { Model, Column, PrimaryKey, Table, ForeignKey, BelongsTo, AllowNull } from "sequelize-typescript";
+import { Model, Column, HasMany, PrimaryKey, Table, ForeignKey, BelongsTo, AllowNull } from "sequelize-typescript";
 import CustomerModel from "./customer";
+import ItemModel from "./items";
 
 @Table({
     tableName: "orders",
@@ -20,5 +21,8 @@ export default class OrderModel extends Model {
 
     @Column({ allowNull: false })
     declare total: number;
+
+    @HasMany(() => ItemModel)
+    declare items: ItemModel[];
     
 }
