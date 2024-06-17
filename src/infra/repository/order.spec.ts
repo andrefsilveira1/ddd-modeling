@@ -10,6 +10,7 @@ import OrderModel from "../db/sequelize/model/order";
 import ItemModel from "../db/sequelize/model/items";
 import OrderItem from "../../domain/entity/items";
 import Order from "../../domain/entity/order";
+import OrderRepository from "./order";
 
 describe("Order repository test", () => {
     let sequelize: Sequelize;
@@ -55,8 +56,8 @@ describe("Order repository test", () => {
 
         orderRepository.create(order);
 
-        const orderModel = await OrderModel.findOne({ 
-            where: {id: order.id},
+        const orderModel = await OrderModel.findOne({
+            where: { id: order.id },
             include: ["items"],
         });
 
@@ -70,10 +71,11 @@ describe("Order repository test", () => {
                     name: orderItem.name,
                     price: orderItem.price,
                     quantity: orderItem.quantity,
-                    order_id: "1"
+                    order_id: "1",
+                    product_id: "1"
                 }
             ]
         }))
     })
-   
+
 });
