@@ -1,22 +1,23 @@
 import { Model, Column, PrimaryKey, Table, ForeignKey, BelongsTo, AllowNull } from "sequelize-typescript";
 import CustomerModel from "./customer";
+import ProductModel from "./product";
 
 @Table({
-    tableName: "orders",
+    tableName: "items",
     timestamps: false,
 })
 
-export default class OrderModel extends Model {
+export default class ItemModel extends Model {
     @PrimaryKey
     @Column
     declare id: string;
 
-    @ForeignKey(() => CustomerModel)
+    @ForeignKey(() => ProductModel)
     @Column({allowNull: false})
-    declare customer_id: string;
+    declare product_id: string;
 
-    @BelongsTo(() => CustomerModel)
-    declare customer: CustomerModel;
+    @BelongsTo(() => ProductModel)
+    declare product: ProductModel;
 
     @Column({ allowNull: false })
     declare total: number;
