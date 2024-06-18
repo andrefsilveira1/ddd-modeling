@@ -18,12 +18,12 @@ describe("Order repository test", () => {
     beforeEach(async () => {
         sequelize = new Sequelize({
             dialect: 'sqlite',
-            storage: ':memory',
+            storage: ':memory:',
             logging: false,
             sync: { force: true },
         });
 
-        sequelize.addModels([OrderModel, CustomerModel, ProductModel, ItemModel]);
+        await sequelize.addModels([CustomerModel, OrderModel, ItemModel, ProductModel]);
         await sequelize.sync();
 
     });
@@ -37,7 +37,7 @@ describe("Order repository test", () => {
         const customerRepository = new CustomerRepository();
         const customer = new Customer("1", "Customer 1");
         const address = new Address("Street 1", 1, "123456", "Natal");
-        customer.address = address;
+        customer.changeAddress(address);
         await customerRepository.create(customer);
 
         const productRepository = new ProductRepository();
@@ -45,7 +45,8 @@ describe("Order repository test", () => {
         await productRepository.create(product);
 
         const orderRepository = new OrderRepository();
-        const orderItem = new OrderItem("1",
+        const orderItem = new OrderItem(
+            "1",
             product.name,
             product.price,
             product.id,
@@ -53,15 +54,14 @@ describe("Order repository test", () => {
         );
 
         const order = new Order("1", "1", [orderItem])
-
-        orderRepository.create(order);
+        await orderRepository.create(order);
 
         const orderModel = await OrderModel.findOne({
             where: { id: order.id },
             include: ["items"],
         });
 
-        expect(orderModel.toJSON().toStrictEqual({
+        expect(orderModel.toJSON()).toStrictEqual({
             id: "1",
             customer_id: "1",
             total: order.total(),
@@ -75,7 +75,7 @@ describe("Order repository test", () => {
                     product_id: "1"
                 }
             ]
-        }))
+        });
     })
 
 });

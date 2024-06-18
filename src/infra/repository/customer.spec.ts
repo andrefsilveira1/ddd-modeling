@@ -7,18 +7,18 @@ import Customer from "../../domain/entity/customer";
 import Address from "../../domain/entity/address";
 import CustomerModel from "../db/sequelize/model/customer";
 
-describe("Product repository test", () => {
+describe("Customer repository test", () => {
     let sequelize: Sequelize;
 
     beforeEach(async () => {
         sequelize = new Sequelize({
             dialect: 'sqlite',
-            storage: ':memory',
+            storage: ':memory:',
             logging: false,
             sync: { force: true },
         });
 
-        sequelize.addModels([CustomerModel]);
+        await sequelize.addModels([CustomerModel]);
         await sequelize.sync();
 
     });
@@ -32,7 +32,7 @@ describe("Product repository test", () => {
         const customerRepository = new CustomerRepository();
         const customer = new Customer("1", "Customer 1");
         const address = new Address("Street 1", 1, "123456", "Natal");
-        customer.address = address;
+        customer.changeAddress(address);
         await customerRepository.create(customer);
 
         const customerModel = await CustomerModel.findOne({ where: { id: "1" } });

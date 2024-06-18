@@ -1,10 +1,10 @@
 import Order from "../../domain/entity/order";
-import CustomerModel from "../db/sequelize/model/customer";
 import ItemModel from "../db/sequelize/model/items";
+import OrderModel from "../db/sequelize/model/order";
 
 export default class OrderRepository {
     async create(order: Order): Promise<void> {
-        await CustomerModel.create({
+        await OrderModel.create({
             id: order.id,
             customer_id: order.customerId,
             total: order.total(),
@@ -17,7 +17,7 @@ export default class OrderRepository {
             }))
         },
         {
-            include: [{ model: ItemModel}]
+            include: [{ model: ItemModel }]
         }
     );
     }
