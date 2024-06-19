@@ -77,23 +77,18 @@ export default class OrderRepository {
         const models = await OrderModel.findAll({
             include: [{ model: ItemModel }]
         });
-        const orders = models.map((order) => {
-            const itemsOrder = order.items.map((item) =>
-                new OrderItem(
-                    item.id,
-                    item.name,
-                    item.price,
-                    item.product_id,
-                    item.quantity
-                ));
-            
-             return new Order(
-                order.id,
-                order.customer_id,
-                itemsOrder
-            )
-            
-        });
+        
+        const orders = models.map((order) => new Order(
+            order.id,
+            order.customer_id,
+            order.items.map((item) => new OrderItem(
+                item.id,
+                item.name,
+                item.price,
+                item.product_id,
+                item.quantity
+            ))
+        ));
     
         return orders;
     }
