@@ -223,6 +223,7 @@ describe("Order repository test", () => {
 
         const orders = await orderRepository.list();
         const ordersArray = [order, order2];
+        
         expect(orders).toEqual(ordersArray);
     })
 

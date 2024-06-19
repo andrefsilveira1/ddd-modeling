@@ -1,9 +1,10 @@
 import OrderItem from "../../domain/entity/items";
 import Order from "../../domain/entity/order";
+import OrderRepositoryInterface from "../../domain/repository/order";
 import ItemModel from "../db/sequelize/model/items";
 import OrderModel from "../db/sequelize/model/order";
 
-export default class OrderRepository {
+export default class OrderRepository implements OrderRepositoryInterface {
     async create(order: Order): Promise<void> {
         await OrderModel.create(
             {
@@ -64,20 +65,32 @@ export default class OrderRepository {
         await OrderModel.update({ customer_id: order.customer_id, total: order.total() }, { where: { id: order.id } });
     }
 
-    async find(id: string): Promise<OrderModel> {
+    async find(id: string): Promise<Order> {
         const model = await OrderModel.findOne({
             where: { id },
             include: [{ model: ItemModel }]
         });
 
-        return model;
+        const order = new Order(
+            model.id,
+            model.customer_id,
+            model.items.map((item) => new OrderItem(
+                item.id,
+                item.name,
+                item.price,
+                item.product_id,
+                item.quantity
+            ))
+        );
+        
+        return order;
     }
 
     async list(): Promise<Order[]> {
         const models = await OrderModel.findAll({
             include: [{ model: ItemModel }]
         });
-        
+
         const orders = models.map((order) => new Order(
             order.id,
             order.customer_id,
@@ -89,7 +102,7 @@ export default class OrderRepository {
                 item.quantity
             ))
         ));
-    
+
         return orders;
     }
 
