@@ -168,21 +168,8 @@ describe("Order repository test", () => {
         await orderRepository.create(order);
 
         const orderModel = await orderRepository.find("1");
-        expect(orderModel.toJSON()).toStrictEqual({
-            id: "1",
-            customer_id: "1",
-            total: order.total(),
-            items: [
-                {
-                    id: orderItem.id,
-                    name: orderItem.name,
-                    price: orderItem.price,
-                    quantity: orderItem.quantity,
-                    order_id: "1",
-                    product_id: "1"
-                }
-            ]
-        });
+        
+        expect(orderModel).toStrictEqual(order);
     });
 
     it("Should return all orders", async () => {
@@ -223,7 +210,7 @@ describe("Order repository test", () => {
 
         const orders = await orderRepository.list();
         const ordersArray = [order, order2];
-        
+
         expect(orders).toEqual(ordersArray);
     })
 
