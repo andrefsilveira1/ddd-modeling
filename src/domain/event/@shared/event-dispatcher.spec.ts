@@ -1,6 +1,8 @@
+import AddressChangedEvent from "../costumer/address-changed.event";
 import CustomerCreatedEvent from "../costumer/customer-created.event";
-import EnviaConsoleLog1Handler from "../costumer/handlers/handler1";
-import EnviaConsoleLog2Handler from "../costumer/handlers/handler2";
+import EnviaConsoleLogHandler from "../costumer/handlers/change-address-handler";
+import EnviaConsoleLog1Handler from "../costumer/handlers/console-log-handler1";
+import EnviaConsoleLog2Handler from "../costumer/handlers/console-log-handler2";
 import sendEmailWhenProductIsCreatedHandler from "../product/handlers/send-email";
 import ProductCreatedEvent from "../product/product-created.event";
 import EventDispatcher from "./event-dispatcher";
@@ -125,6 +127,24 @@ describe("Domain Events tests", () => {
         });
 
         eventDispatcher.notify(customerCreatedEvent);
+        
+        expect(spyEvent).toHaveBeenCalled();
+    });
+
+    it("Should notify EnviaConsoleLogHandler", () => {
+        const eventDispatcher = new EventDispatcher();
+        const eventHandler = new EnviaConsoleLogHandler();
+        const spyEvent = jest.spyOn(eventHandler, "handle");
+
+        eventDispatcher.register("AddressChangedEvent", eventHandler);
+
+        const addressChangedEvent = new AddressChangedEvent({
+            id: "1",
+            name: "Customer 1",
+            address: "Street 1, 40028922",
+        });
+
+        eventDispatcher.notify(addressChangedEvent);
         
         expect(spyEvent).toHaveBeenCalled();
     });
