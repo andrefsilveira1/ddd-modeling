@@ -88,9 +88,11 @@ describe("Domain Events tests", () => {
         const eventDispatcher = new EventDispatcher();
         const eventHandler = new EnviaConsoleLog1Handler();
         const secondEventHandler = new EnviaConsoleLog2Handler();
+        const thirdEventHandler = new EnviaConsoleLogHandler();
 
         eventDispatcher.register("CustomerCreatedEvent", eventHandler);
         eventDispatcher.register("CustomerCreatedEvent", secondEventHandler);
+        eventDispatcher.register("AddressChangedEvent", thirdEventHandler);
         eventDispatcher.unregisterAll();
 
         expect(eventDispatcher.getEventHandlers["CustomerCreatedEvent"]).toBeUndefined();
