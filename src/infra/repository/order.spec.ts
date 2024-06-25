@@ -8,8 +8,8 @@ import Address from "../../domain/entity/address";
 import CustomerModel from "../db/sequelize/model/customer";
 import OrderModel from "../db/sequelize/model/order";
 import ItemModel from "../db/sequelize/model/items";
-import OrderItem from "../../domain/entity/items";
-import Order from "../../domain/entity/order";
+import OrderItem from "../../domain/checkout/items";
+import Order from "../../domain/checkout/order";
 import OrderRepository from "./order";
 
 describe("Order repository test", () => {

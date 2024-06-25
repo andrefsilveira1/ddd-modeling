@@ -1,6 +1,6 @@
 import Customer from "../domain/entity/customer";
-import OrderItem from "../domain/entity/items";
-import Order from "../domain/entity/order";
+import OrderItem from "../domain/checkout/items";
+import Order from "../domain/checkout/order";
 
 export default class OrderService {
     static total(orders: Order[]): number {
